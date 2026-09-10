@@ -10,8 +10,6 @@ import { Achievements } from './components/Achievements.tsx';
 import { Languages } from './components/Languages.tsx';
 import { Contact } from './components/Contact.tsx';
 import { Footer } from './components/Footer.tsx';
-import { ThreeDWorld } from './components/ThreeDWorld.tsx';
-import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -35,8 +33,10 @@ export default function App() {
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const id = sectionIds[i];
         const element = document.getElementById(id);
+
         if (element) {
           const top = element.offsetTop;
+
           if (scrollPosition >= top) {
             setActiveSection(id);
             break;
@@ -47,15 +47,14 @@ export default function App() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-600/30 selection:text-blue-200 relative">
-      {/* 3D Graphic Environment covering the entire website */}
-      <ErrorBoundary fallback={null}>
-        <ThreeDWorld />
-      </ErrorBoundary>
 
       {/* Sticky Navbar */}
       <Navbar activeSection={activeSection} />
